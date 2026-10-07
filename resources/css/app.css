@@ -1,0 +1,81 @@
+/* ────────────────────────────────────────────────────────────────────────────
+ * Global CSS — plain CSS only (no Tailwind).
+ *
+ * Styling is authored in resources/js/stylex.js (StyleX) and compiled to
+ * atomic classes. This file carries what StyleX can't express cleanly:
+ * the semantic color token fallbacks, the [x-cloak] guard, and a couple of
+ * ancestor-scoped helpers (.dark .accent-fg) that StyleX has no selector for.
+ * ──────────────────────────────────────────────────────────────────────────── */
+
+/* Semantic token fallbacks. The runtime `--pf-*` variables are written
+   synchronously by the theme preset script in each layout — these values only
+   apply when that script hasn't run (e.g. during SSR of the home page). */
+:root {
+    --pf-bg: #030909;
+    --pf-text: #e5eded;
+    --pf-text-muted: #788382;
+    --pf-surface: #081111;
+    --pf-c1: #00c8cb;
+    --pf-c2: #00acfd;
+    --pf-accent: #00d6d7;
+    --pf-header: #00d6d7;
+    --pf-f1: #010404;
+    --pf-f2: #0f1818;
+    --pf-c1-rgb: 0, 200, 203;
+    --pf-c2-rgb: 0, 172, 253;
+    --pf-accent-rgb: 0, 214, 215;
+    --pf-header-rgb: 0, 214, 215;
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+/* Predictable sizing across pages: padding/border are drawn inside declared
+   widths. Without this, elements with width:100% plus padding overflow their
+   container (e.g. the sticky header on small viewports). */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+/* Brand-accent foreground that stays legible in light mode: purple (primary)
+   on light, the teal identity accent on dark. Scoped to the `.dark` class the
+   layout sets synchronously. */
+.accent-fg {
+    color: var(--pf-c1, #6429ed);
+}
+
+.dark .accent-fg {
+    color: var(--pf-accent, #00e5fd);
+}
+
+.accent-fg-70 {
+    color: color-mix(in srgb, var(--pf-c1, #6429ed) 70%, transparent);
+}
+
+.accent-fg-70:hover {
+    color: var(--pf-c1, #6429ed);
+}
+
+.dark .accent-fg-70 {
+    color: color-mix(in srgb, var(--pf-accent, #00e5fd) 70%, transparent);
+}
+
+.dark .accent-fg-70:hover {
+    color: var(--pf-accent, #00e5fd);
+}
